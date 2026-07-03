@@ -1,0 +1,35 @@
+---
+const features = [
+  { title: 'Multi-provider', body: 'Claude, GPT-4, and Gemini out of the box. Switch models with a flag — no lock-in.' },
+  { title: 'Permission system', body: 'Five modes — default, plan, acceptEdits, auto, internal — control exactly what runs automatically.' },
+  { title: 'Slash commands', body: 'A built-in command palette: /undo, /diff, /checkpoint, /mode, /compact, and more. Type / to open it.' },
+  { title: '8 built-in tools', body: 'read_file, write_file, edit_file, bash, git, glob, grep, list_files — with dangerous ops permanently blocked.' },
+  { title: 'Session management', body: 'Conversations save as JSONL in your project. Resume any session across terminal restarts.' },
+  { title: 'Undo & checkpoints', body: 'Revert the last edit with /undo, or git-stash checkpoints with /checkpoint and /rollback.' },
+];
+---
+<section id="features" class="features">
+  <div class="container">
+    <h2>Everything you need, nothing you don't</h2>
+    <div class="grid">
+      {features.map((f) => (
+        <article class="card">
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features { padding-block: var(--space-7); border-top: 1px solid var(--border); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .grid { margin-top: var(--space-6); display: grid; gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .card { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: var(--space-5); transition: border-color 0.2s ease; }
+  .card:hover { border-color: var(--accent-dim); }
+  .card h3 { font-size: 1.1rem; color: var(--accent); }
+  .card p { color: var(--text-muted); margin-top: var(--space-3); font-size: 0.95rem; }
+</style>
