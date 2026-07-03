@@ -1,0 +1,373 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'installation', label: 'Installation' },
+  { id: 'configuration', label: 'Configuration' },
+  { id: 'permissions', label: 'Permission Modes' },
+  { id: 'commands', label: 'Slash Commands' },
+  { id: 'tools', label: 'Tools' },
+  { id: 'sessions', label: 'Sessions' },
+  { id: 'development', label: 'Development' },
+  { id: 'troubleshooting', label: 'Troubleshooting' },
+];
+const statuses = [
+  { mode: 'default', reads: '✅ Auto', writes: '❓ Prompt', bash: '❓ Prompt', use: 'Daily use' },
+  { mode: 'plan', reads: '✅ Auto', writes: '❌ Blocked', bash: '❌ Blocked', use: 'Review-only' },
+  { mode: 'acceptEdits', reads: '✅ Auto', writes: '✅ Auto', bash: '❓ Prompt', use: 'Trusted edits' },
+  { mode: 'auto', reads: '✅ Auto', writes: '✅ Auto', bash: '✅ Auto', use: 'Scripting / CI' },
+  { mode: 'internal', reads: '✅ Auto', writes: '✅ Auto', bash: '✅ Auto', use: 'Fully trusted' },
+];
+const cmds = [
+  { cmd: '/help', desc: 'Show all available commands' },
+  { cmd: '/clear', desc: 'Clear the conversation' },
+  { cmd: '/compact', desc: 'Manually compact context to free up token budget' },
+  { cmd: '/mode &lt;mode&gt;', desc: 'Switch permission mode' },
+  { cmd: '/model', desc: 'Show current model' },
+  { cmd: '/session', desc: 'Show session info' },
+  { cmd: '/tokens', desc: 'Show real token usage (from provider)' },
+  { cmd: '/undo', desc: 'Revert the last file change' },
+  { cmd: '/diff', desc: 'Show uncommitted git changes' },
+  { cmd: '/checkpoint', desc: 'Create a git stash checkpoint' },
+  { cmd: '/rollback', desc: 'Restore last checkpoint' },
+  { cmd: '/login &lt;provider&gt; &lt;key&gt;', desc: 'Save an API key' },
+  { cmd: '/logout &lt;provider&gt;', desc: 'Remove a saved API key' },
+  { cmd: '/auth', desc: 'Show provider auth status' },
+  { cmd: '/exit', desc: 'Exit wardayacode' },
+];
+const toolList = [
+  { tool: 'read_file', desc: 'Read a file with optional line range' },
+  { tool: 'write_file', desc: 'Create or overwrite a file' },
+  { tool: 'edit_file', desc: 'Surgical string-replacement edits' },
+  { tool: 'bash', desc: 'Run shell commands' },
+  { tool: 'git', desc: 'Run git commands' },
+  { tool: 'glob', desc: 'Find files by pattern (**/*.ts)' },
+  { tool: 'grep', desc: 'Search file contents with regex' },
+  { tool: 'list_files', desc: 'List a directory' },
+];
+---
+<Base title="Documentation — wardayacode" description="Complete documentation for wardayacode: an open-source AI coding agent for the terminal. Install, configure, slash commands, tools, and more.">
+  <Header />
+  <div class="docs-layout">
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-back">← Back to home</a>
+        <div class="sidebar-group">
+          <span class="sidebar-heading">Getting Started</span>
+          {sections.slice(0, 2).map(s => <a href={`#${s.id}`} class="sidebar-link">{s.label}</a>)}
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-heading">Usage</span>
+          {sections.slice(2, 6).map(s => <a href={`#${s.id}`} class="sidebar-link">{s.label}</a>)}
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-heading">Reference</span>
+          {sections.slice(6).map(s => <a href={`#${s.id}`} class="sidebar-link">{s.label}</a>)}
+        </div>
+      </nav>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar navigation">☰</button>
+    </aside>
+    <main class="docs-content">
+      <h1>Documentation</h1>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>wardayacode is an AI-powered coding agent that lives in your terminal. It understands natural language requests and can read, write, and edit files, run shell commands, manage git, and more — all through a conversation-based interface.</p>
+        <p>Built on a ReAct (Reasoning + Acting) loop using the Vercel AI SDK, wardayacode supports multiple LLM providers out of the box and includes a flexible permission system that puts you in control.</p>
+        <p>Key highlights:</p>
+        <ul>
+          <li><strong>Multi-provider</strong> — Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google)</li>
+          <li><strong>Permission modes</strong> — 5 modes from full-auto to read-only</li>
+          <li><strong>Slash commands</strong> — built-in command palette for common operations</li>
+          <li><strong>Session management</strong> — conversations persist as JSONL, resume across restarts</li>
+          <li><strong>Undo & checkpoints</strong> — revert changes and restore git checkpoints</li>
+          <li><strong>Open source</strong> — MIT licensed, contributions welcome</li>
+        </ul>
+      </section>
+
+      <section id="installation">
+        <h2>Installation</h2>
+        <h3>Prerequisites</h3>
+        <p>Node.js 20 or newer. Check your version:</p>
+        <pre class="code-block"><code>node --version</code></pre>
+
+        <h3>Install globally</h3>
+        <p>Recommended for daily use:</p>
+        <pre class="code-block"><code>npm install -g wardayacode</code></pre>
+        <p>After installation, you can use either the full name or the short alias:</p>
+        <pre class="code-block"><code>wardayacode    # full command
+wdc            # short alias</code></pre>
+
+        <h3>Run with npx</h3>
+        <p>Try it without installing:</p>
+        <pre class="code-block"><code>npx wardayacode</code></pre>
+
+        <h3>Set up API keys</h3>
+        <p>wardayacode needs at least one API key to operate. Set them as environment variables:</p>
+        <pre class="code-block"><code># Anthropic (Claude)
+export ANTHROPIC_API_KEY=sk-ant-...
+
+# OpenAI
+export OPENAI_API_KEY=sk-...
+
+# Google (Gemini)
+export GOOGLE_GENERATIVE_AI_API_KEY=AIza...</code></pre>
+        <p>Or save them permanently:</p>
+        <pre class="code-block"><code>wardayacode auth login anthropic
+wardayacode auth login openai
+wardayacode auth login google</code></pre>
+
+        <h3>Running from source</h3>
+        <p>Clone the repo and run without building:</p>
+        <pre class="code-block"><code>git clone https://github.com/fawwazmw/wardayacode
+cd wardayacode
+npm install
+npm run dev</code></pre>
+      </section>
+
+      <section id="configuration">
+        <h2>Configuration</h2>
+        <h3>Config files</h3>
+        <p>wardayacode loads configuration from multiple sources, merged in order (highest priority wins):</p>
+        <ol>
+          <li><strong>CLI flags</strong> — <code>--model</code>, <code>--provider</code>, <code>--mode</code>, etc.</li>
+          <li><strong>Project config</strong> — <code>.wardayacode.json</code> in your project root</li>
+          <li><strong>User config</strong> — <code>~/.config/wardayacode/config.json</code></li>
+          <li><strong>Default values</strong> — built-in sensible defaults</li>
+        </ol>
+
+        <h3>Example config</h3>
+        <pre class="code-block"><code>{`{
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-20250514",
+  "permissionMode": "default",
+  "maxTokens": 8192,
+  "temperature": 0,
+  "maxRetries": 3,
+  "theme": "dark",
+  "apiKeys": {
+    "anthropic": "sk-ant-...",
+    "openai": "sk-...",
+    "google": "AIza..."
+  }
+}`}</code></pre>
+
+        <h3>Environment variables</h3>
+        <p>API key environment variables are read at runtime, not during config load. Supported vars:</p>
+        <pre class="code-block"><code>ANTHROPIC_API_KEY
+OPENAI_API_KEY
+GOOGLE_GENERATIVE_AI_API_KEY</code></pre>
+        <p>Env vars are checked after config file merging, so they override any key in the config file.</p>
+      </section>
+
+      <section id="permissions">
+        <h2>Permission Modes</h2>
+        <p>wardayacode asks before making changes. You control how much it can do automatically:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mode</th><th>File reads</th><th>File writes</th><th>Bash / Git</th><th>Use when</th></tr></thead>
+            <tbody>
+              {statuses.map(s => (
+                <tr><td><code>{s.mode}</code></td><td>{s.reads}</td><td>{s.writes}</td><td>{s.bash}</td><td>{s.use}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p>Switch mode mid-session with <code>/mode &lt;name&gt;</code> or choose "Always allow" when prompted. Dangerous operations (force push, <code>rm -rf</code>, <code>dd</code>) are permanently blocked regardless of mode.</p>
+      </section>
+
+      <section id="commands">
+        <h2>Slash Commands</h2>
+        <p>Type <code>/</code> in the TUI to open the command palette, or type any of these directly:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
+              {cmds.map(c => <tr><td><code>{c.cmd}</code></td><td>{c.desc}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tools">
+        <h2>Tools</h2>
+        <p>The agent has access to these tools for interacting with your codebase:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+            <tbody>
+              {toolList.map(t => <tr><td><code>{t.tool}</code></td><td>{t.desc}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+        <p>Tools are permission-gated. Read-only tools are allowed by default; destructive operations are blocked or require confirmation depending on the active permission mode.</p>
+      </section>
+
+      <section id="sessions">
+        <h2>Sessions</h2>
+        <p>Conversations are saved automatically as JSONL files in <code>.wardayacode/</code> in your project directory. This lets you continue where you left off across terminal restarts.</p>
+
+        <h3>Session commands</h3>
+        <pre class="code-block"><code>wardayacode sessions list          # list all sessions
+wardayacode sessions delete &lt;id&gt;   # delete a session
+wardayacode --resume &lt;id&gt;          # resume a session</code></pre>
+
+        <p>Sessions include every message, tool call, and result. The <code>/compact</code> command can manually reduce context to free up token budget when conversations grow long.</p>
+      </section>
+
+      <section id="development">
+        <h2>Development</h2>
+        <p>wardayacode is open source under the MIT license. Contributions are welcome.</p>
+
+        <h3>Setup</h3>
+        <pre class="code-block"><code>git clone https://github.com/fawwazmw/wardayacode
+cd wardayacode
+npm install
+npm run dev            # run from source (no build)
+npm run build          # bundle to dist/
+npm run type-check     # TypeScript strict check
+npm run lint           # ESLint
+npm test               # Vitest watch mode
+npm run test:run       # single CI run</code></pre>
+
+        <h3>Branch strategy</h3>
+        <p>The project uses Git Flow with two permanent branches:</p>
+        <ul>
+          <li><code>main</code> — production, matches the latest npm release</li>
+          <li><code>develop</code> — integration branch, default for PRs</li>
+        </ul>
+        <p>Branch naming: <code>feature/xxx</code>, <code>fix/xxx</code>, <code>release/x.x.x</code>, <code>hotfix/x.x.x</code>. Both <code>main</code> and <code>develop</code> are protected — CI must pass before merging.</p>
+
+        <h3>Release process</h3>
+        <p>Create a GitHub release on <code>main</code> to trigger automated npm publishing (never run <code>npm publish</code> manually). The <code>.github/workflows/publish.yml</code> workflow builds, type-checks, tests, and publishes with provenance.</p>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>Troubleshooting</h2>
+
+        <h3><code>command not found: wardayacode</code></h3>
+        <p>Ensure npm global binaries are in your PATH:</p>
+        <pre class="code-block"><code>npm config get prefix   # add &lt;prefix&gt;/bin to PATH</code></pre>
+
+        <h3>API key errors</h3>
+        <pre class="code-block"><code>wardayacode auth list    # check which providers are configured
+wardayacode auth login anthropic   # re-enter the key</code></pre>
+
+        <h3>Agent makes too many changes</h3>
+        <p>Use <code>/mode plan</code> to switch to read-only mode mid-session, or start with <code>--mode plan</code>.</p>
+
+        <h3>Long conversations lose context</h3>
+        <p>wardayacode automatically compacts context when it nears the token limit. You'll see a system message. Use <code>/clear</code> to start fresh, or <code>/compact</code> to manually compact.</p>
+
+        <h3>Something went wrong and files were changed</h3>
+        <pre class="code-block"><code>/undo          # revert the last file edit
+/rollback      # restore to last git checkpoint
+/diff          # see what changed</code></pre>
+      </section>
+    </main>
+  </div>
+  <Footer />
+</Base>
+
+<style>
+  .docs-layout {
+    display: flex;
+    min-height: calc(100vh - 120px);
+    position: relative;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    padding: var(--space-5);
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+    background: var(--bg);
+    z-index: 5;
+  }
+  .sidebar-group { margin-top: var(--space-4); }
+  .sidebar-heading { display: block; font-size: 0.75rem; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: var(--space-2); text-transform: uppercase; font-weight: 600; }
+  .sidebar-link { display: block; color: var(--text-muted); font-size: 0.9rem; padding: var(--space-1) 0 var(--space-1) var(--space-2); border-left: 2px solid transparent; transition: all 0.15s ease; }
+  .sidebar-link:hover, .sidebar-link:focus { color: var(--text); border-left-color: var(--accent); text-decoration: none; }
+  .sidebar-back { display: block; color: var(--accent); font-size: 0.85rem; margin-bottom: var(--space-2); }
+  .sidebar-back:hover { text-decoration: none; color: var(--accent-dim); }
+  .sidebar-toggle { display: none; position: fixed; bottom: var(--space-4); right: var(--space-4); z-index: 20; background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+  /* Content */
+  .docs-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 760px;
+    padding: var(--space-7) var(--space-5) var(--space-8);
+    margin: 0 auto;
+  }
+  .docs-content h1 { font-size: 2.25rem; margin-bottom: var(--space-5); }
+  .docs-content h2 { font-size: 1.5rem; margin-top: var(--space-7); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); }
+  .docs-content h3 { font-size: 1.1rem; margin-top: var(--space-5); margin-bottom: var(--space-2); color: var(--accent); }
+  .docs-content p { color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-3); }
+  .docs-content ul, .docs-content ol { color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-3); padding-left: var(--space-5); }
+  .docs-content li { margin-bottom: var(--space-1); }
+  .docs-content strong { color: var(--text); }
+  .docs-content a { color: var(--accent); }
+
+  /* Code blocks */
+  .code-block { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); overflow-x: auto; margin-bottom: var(--space-4); }
+  .code-block code { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); line-height: 1.6; white-space: pre; display: block; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin-bottom: var(--space-4); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  thead { background: var(--bg-elev); }
+  th, td { padding: var(--space-3) var(--space-4); text-align: left; border: 1px solid var(--border); }
+  th { color: var(--text); font-weight: 600; }
+  td { color: var(--text-muted); }
+  td code { color: var(--accent); font-family: var(--font-mono); font-size: 0.85rem; }
+  tbody tr:hover { background: var(--bg-elev); }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 57px;
+      width: 280px;
+      height: calc(100vh - 57px);
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      box-shadow: none;
+      border-right: 1px solid var(--border);
+    }
+    .sidebar.open { transform: translateX(0); box-shadow: 8px 0 24px rgba(0,0,0,0.4); }
+    .sidebar-toggle { display: block; }
+    .docs-content { padding-top: var(--space-5); }
+  }
+  @media (max-width: 480px) {
+    .docs-content h1 { font-size: 1.75rem; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+    });
+    // Close sidebar on link click (mobile)
+    sidebar.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          sidebar.classList.remove('open');
+          toggle.textContent = '☰';
+        }
+      });
+    });
+  }
+</script>
