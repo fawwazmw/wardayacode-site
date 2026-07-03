@@ -1,0 +1,36 @@
+---
+const faqs = [
+  { q: 'Which models does it support?', a: 'Claude (Anthropic), GPT-4 (OpenAI), and Gemini (Google). Switch with --model and --provider, or per-session with /model.' },
+  { q: 'Is it free and open source?', a: 'Yes — wardayacode is MIT licensed. You only pay your chosen provider for API usage.' },
+  { q: 'Where are my API keys stored?', a: 'Locally — as environment variables, in a per-project .wardayacode.json, or in your user config. They never leave your machine except in requests to your provider.' },
+  { q: 'Does it send my code anywhere?', a: 'Only to the LLM provider you configure, as part of each request. There is no other telemetry and no wardayacode server.' },
+  { q: 'How do I undo a change I did not want?', a: 'Use /undo to revert the last file edit, /diff to review uncommitted changes, or /rollback to restore the last git checkpoint.' },
+  { q: 'What do I need to run it?', a: 'Node.js 20 or newer. Install with npm install -g wardayacode, then run wardayacode (or the wdc alias).' },
+];
+---
+<section id="faq" class="faq">
+  <div class="container">
+    <h2>FAQ</h2>
+    <div class="list">
+      {faqs.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq { padding-block: var(--space-7); border-top: 1px solid var(--border); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .list { margin-top: var(--space-5); max-width: 760px; }
+  details { border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-3); background: var(--bg-elev); }
+  summary { cursor: pointer; font-weight: 600; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; float: right; color: var(--accent); font-weight: 700; }
+  details[open] summary::after { content: '\2212'; }
+  details p { color: var(--text-muted); margin-top: var(--space-3); font-size: 0.95rem; }
+</style>
