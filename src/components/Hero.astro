@@ -64,7 +64,7 @@ const lines = [
   const term = document.querySelector('[data-terminal]');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (term && !reduce) {
-    const lines = Array.from(term.querySelectorAll('[data-line]'));
+    const lines = Array.from(term.querySelectorAll<HTMLElement>('[data-line]'));
     const texts = lines.map((el) => el.textContent ?? '');
     lines.forEach((el) => { el.textContent = ''; el.style.minHeight = '1.2em'; });
     let li = 0, ci = 0;
