@@ -1,10 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0d0f12"/>
-  <text x="600" y="260" text-anchor="middle" font-family="monospace" font-size="72" font-weight="700" fill="#C084FC" letter-spacing="-2">wardayacode</text>
-  <text x="600" y="330" text-anchor="middle" font-family="system-ui, sans-serif" font-size="34" fill="#e6edf3">An AI coding agent for your terminal</text>
-  <text x="600" y="380" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#9aa7b4">Claude · GPT-4 · Gemini</text>
-  <rect x="350" y="420" width="500" height="50" rx="10" fill="#161a20" stroke="#232a33"/>
-  <text x="600" y="454" text-anchor="middle" font-family="monospace" font-size="20" fill="#C084FC">npm install -g wardayacode</text>
-  <line x1="600" y1="30" x2="600" y2="600" stroke="#232a33" stroke-width="1" opacity="0.3"/>
-  <line x1="30" y1="315" x2="1170" y2="315" stroke="#232a33" stroke-width="1" opacity="0.3"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d0f12"/>
+      <stop offset="100%" stop-color="#161a20"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C084FC" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#C084FC" stop-opacity="0.3"/>
+      <stop offset="70%" stop-color="#C084FC" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#C084FC" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="3" fill="url(#line)"/>
+  <rect x="0" y="627" width="1200" height="3" fill="url(#line)"/>
+
+  <!-- Terminal dots -->
+  <circle cx="60" cy="50" r="7" fill="#ff5f56"/>
+  <circle cx="80" cy="50" r="7" fill="#ffbd2e"/>
+  <circle cx="100" cy="50" r="7" fill="#27c93f"/>
+
+  <!-- Chevron icon -->
+  <path d="M120 65l20 20-20 20" fill="none" stroke="#C084FC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="170" y1="105" x2="250" y2="105" stroke="#C084FC" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Title -->
+  <text x="600" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="72" font-weight="700" fill="#C084FC" letter-spacing="-2">wardayacode</text>
+
+  <!-- Tagline -->
+  <text x="600" y="280" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="32" fill="#e6edf3">An AI coding agent for your terminal</text>
+
+  <!-- Providers -->
+  <text x="600" y="330" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="22" fill="#9aa7b4" letter-spacing="4">CLAUDE · GPT-4 · GEMINI</text>
+
+  <!-- Install command box -->
+  <rect x="350" y="380" width="500" height="60" rx="12" fill="#161a20" stroke="#333333"/>
+  <text x="380" y="418" font-family="'JetBrains Mono', monospace" font-size="22" fill="#C084FC">$ npm install -g wardayacode</text>
+
+  <!-- Version -->
+  <text x="600" y="490" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="16" fill="#555555">v0.6.0 · MIT · Open Source</text>
 </svg>

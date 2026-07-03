@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const releases = [
+  {
+    version: 'v0.6.0',
+    date: '2026-06-24',
+    title: 'Multi-provider & Ink TUI',
+    notes: [
+      'Added Gemini (Google) support alongside existing Anthropic and OpenAI providers',
+      'New Ink-based terminal UI with streaming markdown rendering',
+      'Permission system with 5 modes: default, plan, acceptEdits, auto, internal',
+      'Built-in slash commands: /undo, /diff, /checkpoint, /rollback, /compact, more',
+      'Session management with JSONL persistence and --resume flag',
+      'Config cascade: CLI flags → project .wardayacode.json → user config → defaults',
+      'Added --max-retries flag with exponential backoff',
+      'Permission-gated tool system with 8 built-in tools',
+      'Dangerous ops (force push, rm -rf) permanently blocked',
+    ],
+  },
+  {
+    version: 'v0.5.0',
+    date: '2026-05-15',
+    title: 'OpenAI support & tool system',
+    notes: [
+      'Added GPT-4 (OpenAI) provider alongside existing Claude support',
+      'New tool registry system with permission gating',
+      'Read/write/edit file tools with surgical edit matching',
+      'Bash and Git tool execution with path safety checks',
+      'Glob and grep tools for file search',
+      'Context manager with automatic compaction near token limits',
+      'Multiple permission modes: default, plan, acceptEdits, auto',
+      'Config file support with cosmiconfig',
+    ],
+  },
+  {
+    version: 'v0.4.0',
+    date: '2026-04-10',
+    title: 'Claude agent & undo system',
+    notes: [
+      'Initial Claude (Anthropic) agent implementation using Vercel AI SDK',
+      'ReAct loop with multi-step tool execution',
+      'File system tools: read, write, edit',
+      'Undo manager with session-level revert (/undo)',
+      'Git checkpoint system (/checkpoint, /rollback)',
+      'Diff view for inspecting changes (/diff)',
+      'Basic permission prompts with allow/deny/always',
+      'Optional --debug flag with structured JSON logging',
+    ],
+  },
+];
+---
+<Base title="Changelog — wardayacode" description="Release history for wardayacode — the open-source AI coding agent for your terminal.">
+  <Header />
+  <main class="changelog">
+    <div class="container">
+      <h1>Changelog</h1>
+      <p class="subtitle">All notable changes to wardayacode, in reverse chronological order.</p>
+      <div class="timeline">
+        {releases.map((r) => (
+          <article class="release">
+            <div class="release-marker">
+              <span class="release-version">{r.version}</span>
+              <span class="release-date">{r.date}</span>
+            </div>
+            <div class="release-body">
+              <h2>{r.title}</h2>
+              <ul>
+                {r.notes.map((n) => <li>{n}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .changelog { padding-block: var(--space-7) var(--space-8); }
+  h1 { font-size: 2.25rem; }
+  .subtitle { color: var(--text-muted); margin-top: var(--space-3); }
+  .timeline { margin-top: var(--space-7); position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 140px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+  .release { display: flex; gap: var(--space-6); margin-bottom: var(--space-7); position: relative; }
+  .release-marker { width: 140px; flex-shrink: 0; text-align: right; padding-top: var(--space-1); position: relative; }
+  .release-marker::after { content: ''; position: absolute; right: -9px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
+  .release-version { display: block; font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); }
+  .release-date { display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-top: var(--space-1); }
+  .release-body { flex: 1; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); }
+  .release-body h2 { font-size: 1.2rem; color: var(--text); }
+  .release-body ul { margin-top: var(--space-3); padding-left: var(--space-4); }
+  .release-body li { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: var(--space-1); }
+  .release-body li::marker { color: var(--accent-dim); }
+
+  @media (max-width: 600px) {
+    .timeline::before { left: 0; }
+    .release { flex-direction: column; gap: var(--space-3); }
+    .release-marker { width: auto; text-align: left; }
+    .release-marker::after { right: auto; left: -5px; }
+    .release-marker .release-date { display: inline; margin-left: var(--space-2); }
+  }
+</style>

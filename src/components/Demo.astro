@@ -1,0 +1,62 @@
+---
+const steps = [
+  { t: 'prompt', text: '❯ Refactor the API handler to use async/await in src/api/users.ts' },
+  { t: 'tool', text: '● read_file(src/api/users.ts)' },
+  { t: 'text', text: 'Reading current implementation... Found a mix of .then() and callbacks.' },
+  { t: 'note', text: '✎ Planning refactor for 3 endpoint functions...' },
+  { t: 'tool', text: '● edit_file(src/api/users.ts)' },
+  { t: 'ok', text: '✓ getUsers(): converted .then() → async/await' },
+  { t: 'ok', text: '✓ getUser(id): converted .then() → async/await' },
+  { t: 'ok', text: '✓ createUser(data): converted callbacks → async/await, added try/catch' },
+  { t: 'tool', text: '● bash node src/api/users.test.js' },
+  { t: 'ok', text: '✓ Tests: 12 passed, 0 failed' },
+  { t: 'note', text: '✎ Committing changes...' },
+  { t: 'ok', text: '✓ Commit: refactor(api): convert users handler to async/await' },
+  { t: 'text', text: 'All three endpoint functions are now async. Error handling is consistent and the test suite is green.' },
+];
+---
+<section class="demo" id="demo">
+  <div class="container">
+    <h2>See it in action</h2>
+    <p class="lead">A real session where wardayacode refactors a codebase — reading, editing, testing, and committing without leaving the terminal.</p>
+    <div class="demo-term" data-demo-terminal>
+      <pre class="demo-body">{steps.map((s) => (
+        <div class={`demo-line ${s.t}`} data-demo-line>{s.text}</div>
+      ))}</pre>
+    </div>
+  </div>
+</section>
+
+<style>
+  .demo { padding-block: var(--space-7); border-top: 1px solid var(--border); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .lead { color: var(--text-muted); margin-top: var(--space-3); max-width: 600px; }
+  .demo-term { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 16px 40px -16px rgba(0,0,0,0.5); margin-top: var(--space-5); max-width: 740px; }
+  .demo-body { margin: 0; padding: var(--space-5); font-size: 0.85rem; line-height: 1.8; white-space: pre-wrap; overflow-x: auto; }
+  .demo-line { font-family: var(--font-mono); }
+  .demo-line.prompt { color: var(--text); }
+  .demo-line.tool { color: var(--accent-indigo); }
+  .demo-line.ok { color: var(--success); }
+  .demo-line.text { color: var(--text-muted); }
+  .demo-line.note { color: var(--accent); }
+</style>
+
+<script>
+  const term = document.querySelector('[data-demo-terminal]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (term && !reduce) {
+    const lines = Array.from(term.querySelectorAll<HTMLElement>('[data-demo-line]'));
+    const texts = lines.map((el) => el.textContent ?? '');
+    lines.forEach((el) => { el.textContent = ''; el.style.minHeight = '1.3em'; });
+    let li = 0, ci = 0;
+    const tick = () => {
+      if (li >= lines.length) return;
+      const target = texts[li];
+      ci++;
+      lines[li].textContent = target.slice(0, ci);
+      if (ci >= target.length) { li++; ci = 0; setTimeout(tick, 220); }
+      else { setTimeout(tick, 14); }
+    };
+    setTimeout(tick, 1200);
+  }
+</script>

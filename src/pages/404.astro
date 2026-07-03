@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="404 — wardayacode" description="Page not found">
+  <main class="error-page">
+    <div class="error-term">
+      <div class="term-dots">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      </div>
+      <p class="error-prompt"><span class="prompt-sym">❯</span> <span class="cmd">GET /this-page-does-not-exist</span></p>
+      <p class="error-line error-status">✗ 404 — Not Found</p>
+      <p class="error-line error-detail">The page you're looking for doesn't exist or was moved.</p>
+      <p class="error-line error-msg">Try running <code>/help</code> for a list of available pages, or head back home:</p>
+      <p class="error-line error-cmd"><span class="prompt-sym">❯</span> <a href="/" class="error-link">cd /home</a></p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-5);
+  }
+  .error-term {
+    max-width: 600px;
+    width: 100%;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-dots { display: flex; gap: 8px; margin-bottom: var(--space-5); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .error-line { font-family: var(--font-mono); font-size: 1rem; line-height: 1.8; }
+  .prompt-sym { color: var(--accent); margin-right: var(--space-2); }
+  .error-prompt { font-family: var(--font-mono); font-size: 1rem; margin-bottom: var(--space-4); }
+  .cmd { color: var(--text); }
+  .error-status { color: #F87171; font-weight: 700; font-size: 1.5rem; margin-bottom: var(--space-2); }
+  .error-detail { color: var(--text-muted); margin-bottom: var(--space-3); }
+  .error-msg { color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--space-3); }
+  .error-msg code { color: var(--accent-indigo); }
+  .error-cmd { margin-top: var(--space-2); }
+  .error-link { color: var(--accent); font-family: var(--font-mono); }
+  .error-link:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .error-term { padding: var(--space-4); }
+    .error-status { font-size: 1.2rem; }
+    .error-line { font-size: 0.85rem; }
+  }
+</style>
