@@ -1,61 +1,40 @@
 # wardayacode-site
 
-Marketing site for [wardayacode](https://github.com/fawwazmw/wardayacode) — an open-source, multi-provider AI coding agent for the terminal.
+This is the official website for **[wardayacode](https://github.com/fawwazmw/wardayacode)** — an open-source, multi-provider AI coding agent that lives in your terminal.
 
-**Live at: [wardayacode.my.id](https://wardayacode.my.id)**
+Built to showcase what wardayacode can do, explain how it works, and make it easy for anyone to get started in one command.
 
-## Pages
+→ **Visit live: [wardayacode.my.id](https://wardayacode.my.id)**
 
-| Page | Description |
-|------|-------------|
-| `/` | Home — hero, install, features, demo, privacy, FAQ |
-| `/docs` | Documentation — installation, config, permissions, commands, tools, sessions, development |
-| `/changelog` | Release history with changelog |
-| `404` | Custom terminal-themed 404 page |
+---
 
-## Stack
+## What the site includes
 
-- **Astro** — static site generator, zero JS shipped by default
-- **TypeScript** — strict mode
-- **CSS** — custom properties (design tokens), component-scoped styles
-- **Deploy** — Vercel (auto-deploys on push to `main`)
+The home page walks through everything you need to know about wardayacode:
 
-No UI framework, no Tailwind, no client-side JS framework.
+- **Hero** — tagline with a live terminal-style demo showing the agent fixing a bug
+- **Install** — copy-paste commands for `npm install -g wardayacode` or `npx wardayacode`
+- **Features** — six cards covering multi-provider (Claude, GPT-4, Gemini), 5 permission modes, slash commands, 8 tools, sessions, undo
+- **Demo** — a full session walkthrough: the agent refactors an API handler, runs tests, and commits
+- **Privacy** — local-first, no telemetry, you pick which provider sees your code
+- **FAQ** — answers to common questions, no JavaScript required
+
+There's also a **[full documentation page](https://wardayacode.my.id/docs)** covering installation, configuration, all slash commands, tools, session management, development setup, and troubleshooting.
+
+And a **[changelog](https://wardayacode.my.id/changelog)** tracking every release.
 
 ## Theme
 
-Matches the wardayacode TUI: dark base (`#0d0f12`) with purple accent (`#C084FC`), indigo tool calls (`#818CF8`), teal success (`#34D399`).
+The site matches the wardayacode terminal interface — dark theme with a purple accent. No fluff, no animations beyond the terminal typing effect.
 
-Fonts: JetBrains Mono (terminal/code) + Inter (body).
+## Tech
 
-## Development
-
-```bash
-npm install          # install dependencies
-npm run dev          # dev server at localhost:4321
-npm run build        # static build to dist/
-npm run preview      # preview built site
-npm run check        # TypeScript + Astro diagnostics
-```
-
-## Project structure
+Built with Astro and TypeScript. Zero frameworks, zero client bloat. Static output, deployed on Vercel.
 
 ```
-wardayacode-site/
-├── public/            # static assets (favicon, OG image)
-├── src/
-│   ├── components/    # UI components (Hero, Install, Features, Demo, FAQ, etc.)
-│   ├── layouts/       # Base.astro (HTML shell, meta, fonts)
-│   ├── pages/         # index.astro, docs.astro, changelog.astro, 404.astro
-│   └── styles/        # global.css (design tokens, reset, utilities)
-├── astro.config.mjs
-└── package.json
+npm install          npm run dev          npm run build
 ```
 
-## Deployment
+---
 
-Pushes to `main` auto-deploy via Vercel. Cloudflare handles DNS.
-
-## License
-
-MIT — see the [wardayacode repo](https://github.com/fawwazmw/wardayacode) for the source of the CLI tool itself.
+**[wardayacode.my.id](https://wardayacode.my.id)** · [Report a bug](https://github.com/fawwazmw/wardayacode-site/issues)
