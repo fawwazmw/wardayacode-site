@@ -1,50 +1,61 @@
 # wardayacode-site
 
-Marketing landing page for [WardayaCode](https://github.com/fawwazmw/wardayacode) — an open-source AI coding agent for the terminal.
+Marketing site for [wardayacode](https://github.com/fawwazmw/wardayacode) — an open-source, multi-provider AI coding agent for the terminal.
 
-## Goal
+**Live at: [wardayacode.my.id](https://wardayacode.my.id)**
 
-A single-page marketing site like [opencode.ai](https://opencode.ai/) that showcases the project, explains what it does, and drives installs.
+## Pages
 
-## Recommended stack
+| Page | Description |
+|------|-------------|
+| `/` | Home — hero, install, features, demo, privacy, FAQ |
+| `/docs` | Documentation — installation, config, permissions, commands, tools, sessions, development |
+| `/changelog` | Release history with changelog |
+| `404` | Custom terminal-themed 404 page |
 
-**Astro** — zero JS shipped by default, ~12KB output, deploys to GitHub Pages/Cloudflare Pages for free.
+## Stack
 
-Alternatives to decide in your new session: plain HTML/CSS (simplest), or Astro (best balance of modern + lightweight).
+- **Astro** — static site generator, zero JS shipped by default
+- **TypeScript** — strict mode
+- **CSS** — custom properties (design tokens), component-scoped styles
+- **Deploy** — Vercel (auto-deploys on push to `main`)
 
-## Content to cover
+No UI framework, no Tailwind, no client-side JS framework.
 
-- Hero: tagline + screenshot of the TUI
-- Install: `npx wardayacode` / `npm install -g wardayacode`
-- Features: multi-provider, permission system, 56 slash commands, session management
-- Social proof: GitHub stars, contributors
-- Privacy: local-first, no data leaves your machine
-- FAQ
-- Footer / community links
+## Theme
 
-## Getting started
+Matches the wardayacode TUI: dark base (`#0d0f12`) with purple accent (`#C084FC`), indigo tool calls (`#818CF8`), teal success (`#34D399`).
+
+Fonts: JetBrains Mono (terminal/code) + Inter (body).
+
+## Development
 
 ```bash
-# in your new session, pick a stack and scaffold:
-# Option A: Astro
-npm create astro@latest
-
-# Option B: plain HTML
-# just start writing index.html
+npm install          # install dependencies
+npm run dev          # dev server at localhost:4321
+npm run build        # static build to dist/
+npm run preview      # preview built site
+npm run check        # TypeScript + Astro diagnostics
 ```
 
-## Structure
+## Project structure
 
 ```
 wardayacode-site/
-├── README.md          # this file
-├── public/            # static assets (screenshots, favicon)
-├── src/               # or root-level if plain HTML
-│   ├── index.html
-│   └── styles/
-└── package.json       # if using a framework
+├── public/            # static assets (favicon, OG image)
+├── src/
+│   ├── components/    # UI components (Hero, Install, Features, Demo, FAQ, etc.)
+│   ├── layouts/       # Base.astro (HTML shell, meta, fonts)
+│   ├── pages/         # index.astro, docs.astro, changelog.astro, 404.astro
+│   └── styles/        # global.css (design tokens, reset, utilities)
+├── astro.config.mjs
+└── package.json
 ```
 
-## Related
+## Deployment
 
-- [wardayacode](https://github.com/fawwazmw/wardayacode) — the CLI tool (sibling directory)
+Pushes to `main` auto-deploy via Vercel. Cloudflare handles DNS.
+
+## License
+
+MIT — see the [wardayacode repo](https://github.com/fawwazmw/wardayacode) for the source of the CLI tool itself.
