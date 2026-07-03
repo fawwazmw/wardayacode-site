@@ -3,9 +3,11 @@
   --bg-elev: #161a20;
   --text: #e6edf3;
   --text-muted: #9aa7b4;
-  --accent: #7ee787;
-  --accent-dim: #4a8d54;
-  --border: #232a33;
+  --accent: #C084FC;
+  --accent-dim: #7C3AED;
+  --border: #333333;
+  --accent-indigo: #818CF8;
+  --success: #34D399;
   --radius: 10px;
   --maxw: 1100px;
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
