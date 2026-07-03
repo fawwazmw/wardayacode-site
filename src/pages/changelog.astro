@@ -86,8 +86,8 @@ const releases = [
   .timeline { margin-top: var(--space-7); position: relative; }
   .timeline::before { content: ''; position: absolute; left: 140px; top: 0; bottom: 0; width: 1px; background: var(--border); }
   .release { display: flex; gap: var(--space-6); margin-bottom: var(--space-7); position: relative; }
-  .release-marker { width: 140px; flex-shrink: 0; text-align: right; padding-top: var(--space-1); position: relative; }
-  .release-marker::after { content: ''; position: absolute; right: -9px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
+  .release-marker { width: 140px; flex-shrink: 0; text-align: right; padding: var(--space-1) var(--space-5) 0 0; position: relative; }
+  .release-marker::after { content: ''; position: absolute; right: -5px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
   .release-version { display: block; font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); }
   .release-date { display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-top: var(--space-1); }
   .release-body { flex: 1; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); }
