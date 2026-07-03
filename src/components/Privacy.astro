@@ -1,0 +1,30 @@
+---
+const points = [
+  { title: 'Local-first', body: 'Sessions, config, and API keys live on your machine — in your project and home directory, never on our servers.' },
+  { title: 'No telemetry', body: 'wardayacode collects no analytics and phones nothing home. There is no account to create.' },
+  { title: 'You choose the provider', body: 'Your code is sent only to the LLM provider you configure — Anthropic, OpenAI, or Google. You pick who sees it.' },
+  { title: 'Guardrails built in', body: 'Destructive operations like force-push, rm -rf, and dd are permanently blocked, in every permission mode.' },
+];
+---
+<section id="privacy" class="privacy">
+  <div class="container">
+    <h2>Your code, your keys, your rules</h2>
+    <div class="grid">
+      {points.map((p) => (
+        <div class="point">
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .privacy { padding-block: var(--space-7); border-top: 1px solid var(--border); }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .grid { margin-top: var(--space-6); display: grid; gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .point h3 { font-size: 1.05rem; color: var(--accent); }
+  .point p { color: var(--text-muted); margin-top: var(--space-2); font-size: 0.95rem; }
+</style>
