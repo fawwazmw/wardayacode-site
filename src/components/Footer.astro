@@ -1,0 +1,26 @@
+---
+const repo = 'https://github.com/fawwazmw/wardayacode';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="cta-final">
+      <code>npm install -g wardayacode</code>
+    </div>
+    <nav class="links">
+      <a href={repo} rel="noopener">GitHub</a>
+      <a href={`${repo}/blob/main/LICENSE`} rel="noopener">MIT License</a>
+      <a href="https://github.com/fawwazmw" rel="noopener">@fawwazmw</a>
+    </nav>
+    <p class="copy">&copy; {year} Wardaya Dev. Built for the terminal.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { padding-block: var(--space-7); border-top: 1px solid var(--border); text-align: center; }
+  .cta-final code { font-family: var(--font-mono); color: var(--accent); background: var(--bg-elev);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3) var(--space-5); display: inline-block; }
+  .links { display: flex; gap: var(--space-5); justify-content: center; margin-top: var(--space-5); font-size: 0.9rem; }
+  .links a { color: var(--text-muted); }
+  .copy { color: var(--text-muted); font-size: 0.85rem; margin-top: var(--space-4); }
+</style>

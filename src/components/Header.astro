@@ -1,0 +1,27 @@
+---
+const repo = 'https://github.com/fawwazmw/wardayacode';
+---
+<header class="site-header">
+  <div class="container bar">
+    <a class="wordmark" href="#">wardaya<span>code</span></a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a href={repo} rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 10; background: rgba(13,15,18,0.8);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .bar { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-3); }
+  .wordmark { font-family: var(--font-mono); font-weight: 700; color: var(--text); }
+  .wordmark span { color: var(--accent); }
+  .wordmark:hover { text-decoration: none; }
+  nav { display: flex; gap: var(--space-5); font-size: 0.9rem; }
+  nav a { color: var(--text-muted); }
+  nav a:hover { color: var(--text); text-decoration: none; }
+  @media (max-width: 600px) { nav a:not(:last-child) { display: none; } }
+</style>
